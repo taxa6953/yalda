@@ -1,82 +1,141 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شب یلدا مبارک</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شب یلدا مبارک</title>
 
-    <!-- فونت فارسی جذاب -->
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@700;900&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            background: linear-gradient(to bottom, #b3001b, #330000);
-            color: #fff;
-            text-align: center;
-            padding-bottom: 60px;
-        }
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Vazirmatn', sans-serif;
+        background: url('pattern.png') repeat; /* تصویر پترن هندوانه/انار خودتان */
+        background-size: 120px;
+        position: relative;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
 
-        h1 {
-            font-size: 40px;
-            font-weight: 900;
-            margin-top: 30px;
-            color: #ffebd6;
-            text-shadow: 0 0 10px #ff4466;
-        }
+    .container {
+        width: 95%;
+        margin: 15px auto;
+        text-align: center;
+        position: relative;
+    }
 
-        .container {
-            width: 95%;
-            max-width: 800px;
-            margin: auto;
-            margin-top: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 20px;
-            backdrop-filter: blur(7px);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-        }
+    h1 {
+        font-size: 32px;
+        color: #fff4e6;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px #c6002b;
+    }
 
-        video {
-            width: 100%;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
+    .image-box {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    }
 
-        .poem {
-            font-size: 22px;
-            line-height: 2;
-            color: #ffeedd;
-            font-weight: 600;
-        }
+    .image-box img {
+        width: 100%;
+        display: block;
+    }
 
-        @media(max-width: 600px) {
-            h1 { font-size: 30px; }
-            .poem { font-size: 18px; }
-        }
-    </style>
+    .sound-btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.5);
+        padding: 10px 12px;
+        border-radius: 50%;
+        backdrop-filter: blur(5px);
+        cursor: pointer;
+        z-index: 5;
+    }
+
+    .sound-btn img {
+        width: 28px;
+    }
+
+    /* انیمیشن بارش انار و هندوانه */
+    .fall {
+        position: fixed;
+        top: -60px;
+        width: 35px;
+        pointer-events: none;
+        animation: fallAnim linear infinite;
+        z-index: 999;
+    }
+
+    @keyframes fallAnim {
+        0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+        10% { opacity: 1; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0.8; }
+    }
+</style>
 </head>
+
 <body>
 
-    <h1>🎊 شب یلدا مبارک 🎊</h1>
+<audio id="bg-music" src="music.mp3" autoplay loop></audio>
 
-    <div class="container">
-        <!-- ویدیو: اتوپلی + فقط امکان میوت -->
-        <video autoplay loop muted controls playsinline
-               oncontextmenu="return false;"
-               controlsList="nodownload noplaybackrate nofullscreen">
-            <source src="video.mp4" type="video/mp4">
-        </video>
+<h1>شب یلدا مبارک</h1>
 
-        <div class="poem">
-            شب یلداست، شبِ عشق و محبت<br>
-            شبِ لبخند و نگاهِ پر از گرمی<br>
-            شبِ آواز انار و قصه‌های شیرین<br>
-            یلداتون پر از شادی و لحظه‌های ناب باد 🌙🍉❤️
+<div class="container">
+    <div class="image-box">
+        <img src="main.jpg" alt="Yalda Image">
+
+        <!-- دکمه صدا -->
+        <div id="soundToggle" class="sound-btn">
+            <img id="soundIcon" src="https://img.icons8.com/ios-glyphs/50/ffffff/speaker.png">
         </div>
     </div>
+</div>
+
+<script>
+/* ----------------------------
+   کنترل Mute / Unmute موسیقی
+----------------------------- */
+let music = document.getElementById("bg-music");
+let btn = document.getElementById("soundToggle");
+let icon = document.getElementById("soundIcon");
+
+btn.addEventListener("click", () => {
+    if (music.muted) {
+        music.muted = false;
+        icon.src = "https://img.icons8.com/ios-glyphs/50/ffffff/speaker.png";
+    } else {
+        music.muted = true;
+        icon.src = "https://img.icons8.com/ios-glyphs/50/ffffff/mute.png";
+    }
+});
+
+/* ----------------------------
+   بارش انار / هندوانه
+----------------------------- */
+const fruits = [
+    "https://i.postimg.cc/yN5tD7bc/pomegranate.png",
+    "https://i.postimg.cc/5y3YzF7L/seeds.png",
+    "https://i.postimg.cc/3xFjfjH6/watermelon.png"
+];
+
+function createFall() {
+    const el = document.createElement("img");
+    el.src = fruits[Math.floor(Math.random() * fruits.length)];
+    el.classList.add("fall");
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = (4 + Math.random() * 4) + "s";
+    document.body.appendChild(el);
+
+    setTimeout(() => el.remove(), 9000);
+}
+
+setInterval(createFall, 600);
+</script>
 
 </body>
 </html>
